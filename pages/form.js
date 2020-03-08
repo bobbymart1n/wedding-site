@@ -38,7 +38,7 @@ const Form = () => {
   
     setFormState({
       ...formState,
-      [name]: value,
+      [`${name}`]: value,
     })
   };
 
@@ -48,18 +48,17 @@ const Form = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
+    const res = await fetch('https://docs.google.com/forms/d/1gyLKYJgqGJgjqpMpKz8wot0ETHvxIg614zCgnFRnWOs/formResponse', {
       method: 'POST',
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: formState,
+      body: JSON.stringify(formState),
     })
 
     const data = await res.json();
     console.log(data);
-    
   }
 
   return (
