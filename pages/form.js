@@ -1,4 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import fetch from 'isomorphic-unfetch';
+
+import Button from './components/Button';
+import Radio from './components/Radio';
+import Input from './components/Input';
 
 const StyledFormSection = styled.section`
   display: flex;
@@ -19,50 +25,67 @@ const StyledFormSectionImage = styled.img`
 const StyledFormSectionForm = styled.form`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 `;
-
-const StyledFormSectionInput = styled.input`
-  width: 100%;
-  height: 50px;
-  border: none;
-  border-bottom: 2px solid #222;
-  margin-bottom: 20px;
-  font-size: 18px;
-
-  &::placeholder {
-    font-size: 18px;
-  }
-`;
-
-const StyledFormSectionSubmitButton = styled.button`
-  width: 120px;
-  height: 50px;
-  color: #222;
-  outline: none;
-  border: 2px solid #222;
-  border-radius: 8px;
-  font-size: 18px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #222;
-    color: #FFF;
-  }
-`;
-
-const handleSubmit = (event) => {
-  event.preventDefault();
-}
 
 const Form = () => {
+  const [formState, setFormState] = useState({});
+
+  const handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+  
+    setFormState({
+      ...formState,
+      [name]: value,
+    })
+  };
+
+  console.log(formState);
+  
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
+      method: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+      body: formState,
+    })
+
+    const data = await res.json();
+    console.log(data);
+    
+  }
+
   return (
     <StyledFormSection>
       <StyledFormSectionImage src='/caseybobby.svg' alt='casey and bobby are getting married!' />
+      <h1>RSVP</h1>
       <StyledFormSectionForm onSubmit={handleSubmit}>
-        <StyledFormSectionInput 
+        <Input
+          type='text'
+          name='entry.1915340210'
           placeholder='Enter your names'
+          onChange={(e) => handleChange(e)}
         />
-        <StyledFormSectionSubmitButton>Submit</StyledFormSectionSubmitButton>
+        <Radio
+          label='Yes'
+          name='entry.1326234195'
+          value='yes'
+          onChange={(e) => handleChange(e)} 
+        />
+        <Radio
+          label='No'
+          name='entry.1326234195'
+          value='no'
+          onChange={(e) => handleChange(e)}
+        />
+        <Button type='submit'>Submit</Button>
       </StyledFormSectionForm>
     </StyledFormSection>
   );
