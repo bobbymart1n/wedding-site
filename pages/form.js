@@ -2,9 +2,9 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import fetch from 'isomorphic-unfetch';
 
-import Button from './components/Button';
-import Radio from './components/Radio';
-import Input from './components/Input';
+import Button from '../components/Button';
+import Radio from '../components/Radio';
+import Input from '../components/Input';
 
 const StyledFormSection = styled.section`
   display: flex;
