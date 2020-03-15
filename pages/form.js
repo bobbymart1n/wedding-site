@@ -24,7 +24,7 @@ const StyledFormSectionImage = styled.img`
 
 const StyledFormSectionForm = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   box-sizing: border-box;
 `;
 
@@ -59,9 +59,6 @@ const Form = () => {
 
     Object.keys(formState).forEach(obj => urlParams.append(`${obj}`, `${formState[obj]}`));
 
-    console.log(urlParams);
-    
-
     const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
       method: 'POST',
       headers: {
@@ -74,7 +71,9 @@ const Form = () => {
     await checkResponseStatus();
     
     const data = await res.json();
+
     console.log(data);
+    
     
     return data;
   }

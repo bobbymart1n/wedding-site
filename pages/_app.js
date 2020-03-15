@@ -10,6 +10,8 @@ const theme = {
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
+    font-family: 'Playfair Display', serif;
+    color: #222;
   }
 `;
 
@@ -21,6 +23,7 @@ export default class MyApp extends App {
       <>
         <Head>
           <title>Casey & Bobby 2020</title>
+          <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet"></link>
         </Head>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
