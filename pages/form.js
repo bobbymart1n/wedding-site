@@ -55,14 +55,20 @@ const Form = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const urlParams = new URLSearchParams();
+
+    Object.keys(formState).forEach(obj => urlParams.append(`${obj}`, `${formState[obj]}`));
+
+    console.log(urlParams);
+    
+
     const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
       method: 'POST',
       headers: {
-        // 'Access-Control-Allow-Origin': 'https://www.caseybobby.com',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
-      body: encodeURI(JSON.stringify(formState)),
+      body: urlParams,
     });
 
     await checkResponseStatus();
