@@ -58,7 +58,7 @@ const Form = () => {
     const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
       method: 'POST',
       headers: {
-        'Access-Control-Allow-Origin': 'https://www.caseybobby.com',
+        // 'Access-Control-Allow-Origin': 'https://www.caseybobby.com',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       credentials: 'include',
