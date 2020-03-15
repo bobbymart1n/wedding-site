@@ -42,23 +42,35 @@ const Form = () => {
     })
   };
 
-  console.log(formState);
-  
+  const checkResponseStatus = (res) => {
+    if (res.ok) {
+      return res;
+    } else {
+      const err = new Error(res.statusText);
+      err.response = res;
+      return Promise.reject(err);
+    }
+  }
   
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const res = await fetch('https://docs.google.com/forms/d/1gyLKYJgqGJgjqpMpKz8wot0ETHvxIg614zCgnFRnWOs/formResponse', {
+    const res = await fetch('https://docs.google.com/forms/d/e/1FAIpQLScWLyd5gVhd74JhzfvYp_ZpttYD0WeFXneJQXS2alC8UvY79g/formResponse', {
       method: 'POST',
       headers: {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': 'https://caseybobby.com',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(formState),
-    })
+      credentials: 'include',
+      body: encodeURI(JSON.stringify(formState)),
+    });
 
+    await checkResponseStatus();
+    
     const data = await res.json();
     console.log(data);
+    
+    return data;
   }
 
   return (
